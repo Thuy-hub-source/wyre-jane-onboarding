@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Getting Started with JANE</title>
+<link rel="preconnect" href="https://api.fontshare.com">
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&amp;display=swap" rel="stylesheet">
 <style>
 :root{--forest:#004440;--ink:#1A4340;--green:#008666;--light:#DDF3EA;--pale:#F7F9F8;--muted:#52665f;--border:#c9ddd4;--surface:#fff;--error:#8a3329;--error-bg:#fff0ed;--text-xs:.75rem;--text-base:1rem;--text-lg:1.2rem;--text-xl:clamp(1.8rem,3vw,2.5rem);--space:1rem}
 *{box-sizing:border-box}body{margin:0;font:17px/1.55 Arial,sans-serif;background:var(--pale);color:var(--ink)}
@@ -42,10 +44,98 @@ dialog::backdrop{background:rgba(0,30,25,.75)}
 @media(max-width:650px){.visual-heading{align-items:flex-start;padding:20px;flex-direction:column;gap:12px}.visual-frame{padding:8px}.visual-caption{padding:20px}.visual-heading button{width:100%}.zoom-head{padding:12px;flex-wrap:wrap}.zoom-head h2{width:100%}.zoom-help{padding:12px}.zoom-scroll{max-height:65dvh}}
 @media print{header,.bottom,.review{display:none}main{width:100%;margin:0}.hero,.card{border:0}}
 </style>
+<style>
+/* Light product-led direction. Wyre green is an accent, not the canvas. */
+:root{--ink:#232528;--forest:#004440;--green:#008666;--light:#edf6f2;--pale:#fff;--muted:#65696e;--border:#e3e5e7;--surface:#fff;--soft:#f5f5f7;--font-body:'Satoshi',Arial,sans-serif}
+body{font-family:var(--font-body);font-size:16px;line-height:1.6}
+header{min-height:76px;padding:12px max(5vw,calc((100vw - 1280px)/2));gap:28px}
+.brand{width:84px}.tag{font-size:11px;letter-spacing:1.1px;color:var(--muted);font-weight:500}
+.prog{width:156px}.track,.bar{height:3px;border-radius:4px}.mode{border:0;padding:8px 0;color:var(--muted)}
+main{width:min(1280px,90vw);margin:28px auto 128px}
+.review{font-size:12px;margin-bottom:44px;color:var(--muted)}
+.hero{padding:0;border:0;border-radius:0;background:transparent}.hero.welcome{padding:0;min-height:0;background:transparent}
+h1{font-size:clamp(32px,3.7vw,48px);font-weight:700;line-height:1.1;letter-spacing:-1.8px;max-width:900px;margin:0 0 30px}
+h2{font-size:20px;letter-spacing:-.4px;font-weight:700}.ey{font-size:12px;letter-spacing:1.7px;color:var(--muted);font-weight:500;margin-bottom:16px}
+.lead{font-size:18px;line-height:1.6;color:var(--muted);max-width:640px}
+.welcome h1{font-size:clamp(42px,4.7vw,64px);letter-spacing:-2.8px;max-width:560px;margin-bottom:24px}
+.welcome-layout{display:grid;grid-template-columns:.82fr 1.18fr;align-items:center;gap:54px;padding:18px 0 36px}
+.welcome-layout .lead{font-size:18px;max-width:420px}
+.visual-intro{margin-top:26px}.visual-intro p{max-width:350px;font-size:12px}
+.product-stage{border-radius:22px;padding:30px;background:var(--soft);min-width:0}
+.stage-label{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:0 0 20px;font-size:12px;color:var(--muted)}
+.stage-label strong{font-weight:700;letter-spacing:1px;color:var(--ink)}
+.stage-window{background:#fff;border:1px solid var(--border);border-radius:12px;padding:18px 10px;box-shadow:0 18px 40px rgba(0,0,0,.06);overflow:hidden}
+.stage-window img{display:block;width:100%;height:auto}
+.stage-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:12px;color:var(--muted);margin-top:22px}
+.stage-foot button{font-size:12px;padding:8px 14px;flex-shrink:0}
+.outcomes{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:24px;border-top:1px solid var(--border);padding-top:26px}
+.outcome{background:transparent;color:var(--ink);border:0;text-align:left;padding:8px 0;font-size:16px;font-weight:400}
+.outcome span{font-size:12px;color:var(--muted);display:block;margin-bottom:8px}.outcome strong{display:block;font-size:18px;font-weight:700}
+.outcome p{margin:4px 0 0;font-size:14px;color:var(--muted);max-width:290px}
+.lesson-layout{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(270px,1fr);gap:32px;align-items:start;margin-top:32px}
+.lesson-layout .visual-card{margin:0;min-width:0;border-radius:18px}
+.lesson-notes{padding:28px;background:var(--soft);border-radius:18px;font-size:16px}
+.lesson-notes h2{font-size:18px;margin:0 0 22px}
+.copy p{margin:0 0 20px;white-space:pre-line}.copy p:last-child{margin-bottom:0}
+.copy strong{font-weight:700;color:var(--ink)}.copy ul,.copy ol{margin:0 0 20px;padding-left:22px}
+.copy li{padding-left:5px;margin-bottom:12px}.copy li:last-child{margin-bottom:0}
+.reading-layout{display:grid;grid-template-columns:200px minmax(0,740px);gap:44px;padding:16px 0}
+.chapter-caption{padding-top:8px;color:var(--muted);font-size:14px}
+.chapter-caption .section-number{display:block;font-size:40px;line-height:1.1;color:#9c9fa2;letter-spacing:-1px;margin-bottom:12px}
+.reading-copy{background:var(--soft);border-radius:18px;padding:34px;font-size:18px}
+.visual-heading{padding:24px 24px 16px;gap:12px;align-items:flex-start}.visual-heading h2{font-size:18px;line-height:1.35}
+.visual-heading button{font-size:12px;padding:9px 13px;flex-shrink:0}.visual-source{font-size:12px;letter-spacing:0}
+.visual-frame{padding:10px 18px 18px}.visual-card.narrow .visual-image{max-width:100%}
+.visual-caption{padding:20px 24px;background:var(--soft);font-size:14px}.visual-caption .visual-source{font-size:12px;margin-top:12px}
+button{border-radius:100px;font-weight:500;transition:background .18s ease,box-shadow .18s ease}
+.next,.continue{padding:12px 25px}.back{color:var(--ink)}.back:hover{background:var(--soft)}
+.bottom{padding:15px max(5vw,calc((100vw - 1280px)/2));background:var(--surface);z-index:5}
+.bottom select{border:0;max-width:340px;font-size:14px}.bottom label{max-width:55%}
+.card{max-width:850px;background:var(--soft);border:0;border-radius:18px}
+.choice{border-radius:12px;background:var(--surface)}.feedback button{border-radius:100px}
+.quizmeta{font-size:14px}.score{font-size:64px}.hero.welcome .continue{margin-top:20px}
+.zoom-head h2{font-size:20px}.zoom-help{font-size:12px}.zoom-head button{font-size:14px}
+html[data-theme=dark]{--ink:#ededee;--forest:#b8dfd0;--green:#008666;--light:#193e31;--pale:#191a1c;--muted:#afb1b5;--border:#3b3d40;--surface:#202124;--soft:#27292c}
+html[data-theme=dark] .ey{color:var(--muted)}html[data-theme=dark] .product-stage{background:var(--soft)}
+@media(prefers-reduced-motion:reduce){button{transition:none}}
+@media(max-width:960px){.welcome-layout{grid-template-columns:1fr;gap:32px}.welcome-layout .lead{max-width:640px}.welcome h1{max-width:800px}.lesson-layout{grid-template-columns:1fr}.lesson-notes{max-width:none}.product-stage{padding:24px}.reading-layout{grid-template-columns:110px 1fr;gap:20px}}
+@media(max-width:650px){header{gap:16px}.brand{width:70px}.tag{font-size:10px}.mode{margin-left:auto}.prog{width:100%;order:4}
+main{margin-top:20px;margin-bottom:130px}.review{gap:4px;margin-bottom:30px;font-size:11px}.hero,.hero.welcome{padding:0}
+.welcome-layout{padding-top:0;gap:28px}.welcome h1{font-size:44px;letter-spacing:-1.8px}.welcome-layout .lead{font-size:16px}
+.product-stage{padding:18px;border-radius:16px}.stage-window{padding:14px 6px}.stage-label{font-size:11px}.stage-foot{align-items:flex-start;flex-direction:column}
+.outcomes{grid-template-columns:1fr;gap:12px;margin-top:16px;padding-top:16px}.outcome{padding:12px 0}.outcome span{float:left;width:32px;margin:3px 0 0}.outcome strong,.outcome p{margin-left:32px}.outcome p{max-width:none}
+h1{font-size:34px;letter-spacing:-1px;margin-bottom:24px}.lesson-layout{margin-top:24px;gap:20px}.lesson-notes{padding:24px}
+.reading-layout{grid-template-columns:1fr;gap:16px;padding:0}.chapter-caption{display:none}.reading-copy{font-size:16px;padding:24px}
+.visual-heading{padding:20px;flex-direction:row;flex-wrap:wrap}.visual-heading button{width:auto}.visual-frame{padding:8px 8px 16px}.visual-caption{padding:20px}
+.bottom{padding:12px 5vw;gap:8px}.bottom select{max-width:138px;font-size:12px}.bottom button{font-size:14px;padding:12px 15px}
+.card{padding:24px}.zoom-head h2{font-size:18px}.zoom-head button{font-size:13px}}
+@media print{.chapter-caption{display:none}.lesson-layout,.reading-layout{display:block}.lesson-notes{margin-top:24px}.product-stage{break-inside:avoid}}
+.training-notice{padding:18px 22px;background:var(--soft);border:1px solid var(--border);border-radius:12px;margin:26px 0;font-size:14px;max-width:900px}
+.training-notice strong{display:block;margin-bottom:4px}.example-sheet{margin:28px 0 0;max-width:1000px;border-top:1px solid var(--border)}
+.example-row{display:grid;grid-template-columns:210px 1fr;gap:28px;padding:24px 0;border-bottom:1px solid var(--border)}
+.example-row dt{font-weight:700}.example-row dd{margin:0;color:var(--ink);max-width:700px}
+.practice-shell{margin-top:28px;max-width:900px}.practice-shell .card{max-width:none}
+.practice-scenario{font-size:18px;line-height:1.6;margin:0 0 24px}.practice-feedback{margin-top:20px;padding:20px;border:1px solid var(--border);border-radius:12px}
+.practice-feedback p{margin:0 0 16px}.practice-feedback p:last-child{margin:0}
+.draft-form label{display:block;font-weight:700;margin:20px 0 8px}.draft-form input,.draft-form textarea{display:block;width:100%;font:inherit;border:1px solid var(--border);border-radius:10px;background:var(--surface);color:var(--ink);padding:14px}
+.draft-form textarea{min-height:108px;resize:vertical}.draft-form button{margin-top:24px}
+.draft-form input:focus-visible,.draft-form textarea:focus-visible{outline:3px solid var(--green);outline-offset:3px}
+.draft-compare{margin:24px 0;padding-bottom:22px;border-bottom:1px solid var(--border)}
+.draft-compare h3{font-size:18px;margin:0 0 14px}.draft-compare p{white-space:pre-wrap;margin:8px 0 16px}
+.draft-compare small{font-size:12px;color:var(--muted);font-weight:700}.self-check{display:flex;align-items:flex-start;gap:12px;font-size:14px;padding-top:8px}.self-check input{width:18px;height:18px;flex-shrink:0;accent-color:var(--green)}
+.practice-shell button:disabled{cursor:default}.practice-shell .continue:disabled{opacity:.45}
+.validation-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:28px}
+.validation-card{padding:28px;border:1px solid var(--border);border-radius:16px}.validation-card p{margin:12px 0;font-size:16px}
+.validation-card .pending{display:inline-block;margin-bottom:18px;padding:4px 10px;font-size:12px;border-radius:50px;background:var(--soft);color:var(--muted)}
+.validation-card h2{margin-bottom:14px}.validation-card p:last-child{color:var(--muted)}
+@media(max-width:650px){.example-row{grid-template-columns:1fr;gap:8px;padding:22px 0}.validation-grid{grid-template-columns:1fr}.validation-card{padding:24px}.practice-scenario{font-size:16px}}
+.tag,.review,.stage-label{font-size:12px}
+html[data-theme=dark] .back{background:var(--surface);color:var(--ink);transition:none}
+</style>
 </head>
 <body>
 <header><img class="brand" src="wyre-logo.png" alt="Wyre"><div class="tag">INTERNAL ONBOARDING<br>GETTING STARTED WITH JANE</div><button class="back mode" id="theme" aria-label="Switch colour theme">Dark view</button><div class="prog"><div class="tag" id="pl">PROGRESS 0%</div><div class="track" role="progressbar" aria-label="Module progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progress"><div class="bar" id="bar"></div></div></div></header>
-<main><div class="review"><span id="mode">REVIEW VERSION · No LMS tracking in this preview</span><span>Complete test module · 22 screens + 10 questions</span></div><section id="content" aria-live="polite"></section></main>
+<main><div class="review"><span id="mode">REVIEW VERSION · No LMS tracking in this preview</span><span id="module-count"></span></div><section id="content" aria-live="polite"></section></main>
 <footer class="bottom"><button id="back" class="back">Back</button><label><span class="hide">Jump to a screen</span><select id="menu" aria-label="Jump to a screen"></select></label><button id="next" class="next">Get started</button></footer>
 <dialog id="visual-dialog" aria-labelledby="zoom-title">
   <div class="zoom-head"><h2 id="zoom-title">Presentation illustration</h2><button id="zoom-size" class="back">Original size</button><button id="zoom-close" class="next">Close</button></div>
@@ -54,8 +144,10 @@ dialog::backdrop{background:rgba(0,30,25,.75)}
 </dialog>
 <script src="data.js"></script>
 <script src="visuals.js"></script>
+<script src="learning.js"></script>
 <script>
 const el=id=>document.getElementById(id);
+el('module-count').textContent=slides.length+' screens · Guided practice · '+quiz.length+' quiz questions';
 let p=0,qi=0,score=0,locked=false,API=null,initialized=false,status='',attemptStarted=false;
 function findAPI(w){for(let i=0;i<10&&w;i++){try{if(w.API)return w.API;if(w.parent&&w.parent!==w)w=w.parent;else break}catch(e){break}}return null}
 try{API=findAPI(window)||findAPI(window.opener)}catch(e){}
@@ -88,13 +180,131 @@ function addVisual(container){
   const caption=text('figcaption','','visual-caption');caption.append(text('p',v.note),text('p',v.provenance,'visual-source'));
   figure.append(head,frame,caption);container.append(figure);
 }
-function render(){const c=el('content');c.replaceChildren();el('back').classList.toggle('hide',p===0||p>slides.length);el('next').classList.toggle('hide',p>=slides.length);el('menu').value=Math.min(p,slides.length-1);el('next').textContent=p===0?'Get started':p===slides.length-1?'Start quiz':'Continue';progress(Math.round(Math.min(p,slides.length)/(slides.length+1)*100));if(p===slides.length){showQ();return}const s=slides[p],card=document.createElement('div');card.className='hero'+(p===0?' welcome':'');card.append(text('div',s[2].toUpperCase(),'ey'),text('h1',s[0]),text('p',s[1],'lead'));if(p===0){const intro=text('div','','visual-intro'),b=text('button','View application illustrations','back');b.onclick=()=>{p=9;render()};intro.append(b,text('p','Now includes 7 illustrations from the Wyre presentation.'));card.append(intro)}c.append(card);addVisual(c);save();window.scrollTo(0,0)}
+function copyBlocks(value){
+  const copy=text('div','','copy');
+  value.split('\n\n').forEach(block=>{
+    const lines=block.split('\n'),list=lines.length>1&&lines.every(l=>/^(\u2022 |\d+\. )/.test(l));
+    if(list){const ul=document.createElement(/^\d/.test(lines[0])?'ol':'ul');lines.forEach(l=>ul.append(text('li',l.replace(/^(\u2022 |\d+\. )/,''))));copy.append(ul)}
+    else{const para=text('p',''),colon=block.indexOf(':');if(colon>0&&colon<48&&!block.slice(0,colon).includes('\n')){para.append(text('strong',block.slice(0,colon+1)),document.createTextNode(block.slice(colon+1)))}else para.textContent=block;copy.append(para)}
+  });
+  return copy;
+}
+function welcomeView(card,container){
+  const intro=text('div','','visual-intro'),b=text('button','View application illustrations','next');
+  b.onclick=()=>{p=9;render()};intro.append(b,text('p','7 presentation illustrations. Explore at your own pace.'));card.append(intro);
+  const layout=text('div','','welcome-layout'),stage=text('div','','product-stage'),label=text('div','','stage-label');
+  label.append(text('strong','JANE'),text('span','Change Request Board'));
+  const frame=text('div','','stage-window'),img=document.createElement('img');img.src=presentationVisuals[10].src;img.alt=presentationVisuals[10].alt;frame.append(img);
+  const foot=text('div','','stage-foot'),zoom=text('button','Take a closer look','back');zoom.onclick=()=>showVisual(presentationVisuals[10]);
+  foot.append(text('span','Illustration from the Wyre presentation'),zoom);stage.append(label,frame,foot);layout.append(card,stage);container.append(layout);
+  const outcomes=text('div','','outcomes');
+  [['01','Start correctly','Choose your route and submit a clear request.',9],['02','Follow your change','Understand statuses and ownership.',10],['03','Work together','Keep comments, files and information useful.',14]].forEach(([n,title,description,target])=>{
+    const button=text('button','','outcome');button.append(text('span',n),text('strong',title),text('p',description));button.onclick=()=>{p=target;render()};outcomes.append(button);
+  });container.append(outcomes);
+}
+let practiceIndex=0,practiceCompleted=false,practicePhase=0;
+const practiceDraft={title:'Improve the form',problem:'',outcome:'',value:''};
+const draftFields=[
+  ['title','Request title',0,'The title names the change rather than just asking for an improvement.'],
+  ['problem','Current problem',1,'The problem explains what happens now and who is affected.'],
+  ['outcome','Desired outcome',2,'The outcome describes what should happen differently.'],
+  ['value','Expected value',4,'The value is motivated; any assumed figures are clearly labelled for validation.']
+];
+function trainingNotice(container,title,message){const n=text('div','','training-notice');n.append(text('strong',title),text('span',message));container.append(n)}
+function showWorkedExample(container){
+  trainingNotice(container,'Fictional training example','No live request is created. Field labels below are drafting prompts, not verified JANE form fields. Real values, approvals and Components must be validated.');
+  const sheet=document.createElement('dl');sheet.className='example-sheet';
+  workedRequest.forEach(([label,value])=>{const row=text('div','','example-row');row.append(text('dt',label),text('dd',value));sheet.append(row)});container.append(sheet);
+}
+function showPractice(container){
+  const shell=text('div','','practice-shell');container.append(shell);
+  function draw(){
+    shell.replaceChildren();
+    if(practicePhase===0){
+      const card=text('div','','card');card.append(text('div','DRAFT THE REQUEST','ey'),text('h2','Turn a vague request into a useful draft.'),text('p','Exercise scenario: an internal form accepts requests without a reference number. One team then has to follow up manually. Use the fictional assumptions in the worked example; do not enter real confidential information.','practice-scenario'));
+      const form=document.createElement('form');form.className='draft-form';
+      draftFields.forEach(([key,label])=>{
+        const field=document.createElement(key==='title'?'input':'textarea'),id='draft-'+key,l=text('label',label);l.htmlFor=id;field.id=id;field.name=key;field.required=true;field.value=practiceDraft[key];field.maxLength=2000;field.oninput=()=>{practiceDraft[key]=field.value;field.setCustomValidity(field.value.trim()?'':'Enter your draft text.');};form.append(l,field);
+      });
+      const compare=text('button','Compare my draft','continue');compare.type='submit';form.append(compare);
+      form.onsubmit=e=>{e.preventDefault();if(draftFields.some(([key])=>!practiceDraft[key].trim()))return;practicePhase=1;draw();shell.scrollIntoView({block:'start'})};
+      card.append(form,text('p','Your draft stays in this page session only. It is not sent to JANE or recorded as an LMS answer.','visual-source'));shell.append(card);return;
+    }
+    if(practicePhase===1){
+      const card=text('div','','card');card.append(text('div','COMPARE AND IMPROVE','ey'),text('h2','Check your draft against the example.'),text('p','There is no automatic judgement of your wording. Compare each part and confirm the checklist honestly. The example figures are fictional, not Wyre business data.'));
+      const checks=[];
+      draftFields.forEach(([key,label,index,criterion])=>{
+        const row=text('section','','draft-compare');row.append(text('h3',label),text('small','YOUR DRAFT'),text('p',practiceDraft[key]),text('small','WORKED EXAMPLE'),text('p',workedRequest[index][1]));
+        const check=document.createElement('input');check.type='checkbox';check.setAttribute('aria-label',criterion);
+        const l=text('label','','self-check');l.append(check,text('span',criterion));row.append(l);checks.push(check);card.append(row);
+      });
+      const proceed=text('button','Practise the next decisions','continue');proceed.disabled=true;
+      checks.forEach(check=>check.onchange=()=>proceed.disabled=!checks.every(c=>c.checked));
+      proceed.onclick=()=>{practicePhase=2;draw();shell.scrollIntoView({block:'start'})};
+      const edit=text('button','Edit my draft','back');edit.style.marginRight='12px';edit.onclick=()=>{practicePhase=0;draw()};
+      card.append(edit,proceed);shell.append(card);return;
+    }
+    if(practiceCompleted){
+      const card=text('div','','card');card.append(text('div','PRACTICE COMPLETE','ey'),text('h2','One draft. Three decisions.'),text('p','You drafted and self-reviewed a request, then practised assessing the route and responding to Form Incomplete. This guided exercise is not proof of live JANE proficiency; the final quiz is separate.'));
+      const again=text('button','Practise again','back');again.onclick=()=>{practiceIndex=0;practiceCompleted=false;practicePhase=0;draw()};card.append(again);shell.append(card);return;
+    }
+    const step=practiceSteps[practiceIndex],card=text('div','','card');
+    card.append(text('div','DECISION '+(practiceIndex+1)+' OF '+practiceSteps.length,'ey'),text('h2',step.title),text('p',step.scenario,'practice-scenario'));
+    const options=text('div','','practice-options'),fb=text('div','','practice-feedback hide');fb.setAttribute('role','status');
+    step.choices.forEach((choice,i)=>{
+      const button=text('button',String.fromCharCode(65+i)+'. '+choice,'choice');button.onclick=()=>{
+        const correct=i===step.correct;fb.className='practice-feedback '+(correct?'ok':'no');fb.replaceChildren(text('p',step.feedback[i]));
+        [...options.children].forEach(b=>b.classList.remove('no'));
+        button.classList.add(correct?'ok':'no');
+        if(correct){
+          [...options.children].forEach(b=>b.disabled=true);
+          const next=text('button',practiceIndex===practiceSteps.length-1?'Finish practice':'Next decision','continue');
+          next.onclick=()=>{if(practiceIndex===practiceSteps.length-1)practiceCompleted=true;else practiceIndex++;draw();shell.scrollIntoView({block:'start'})};fb.append(next);next.focus();
+        }else fb.append(text('p','Try another answer. Use the feedback to decide.'));
+      };options.append(button);
+    });card.append(options,fb);shell.append(card);
+  }draw();
+}
+function showValidation(container){
+  trainingNotice(container,'Review version: process-owner sign-off pending','These are open validation points for Philippe and Eveline or the designated Wyre process owner, not confirmed operating rules. Do not treat this review module as the final production procedure.');
+  const grid=text('div','','validation-grid');
+  validationPoints.forEach(([title,observation,action])=>{
+    const card=text('section','','validation-card');card.append(text('span','TO CONFIRM','pending'),text('h2',title),text('p',observation),text('p',action));grid.append(card);
+  });container.append(grid);
+}
+function render(){
+  const c=el('content');c.replaceChildren();el('back').classList.toggle('hide',p===0||p>slides.length);el('next').classList.toggle('hide',p>=slides.length);el('menu').value=Math.min(p,slides.length-1);
+  el('next').textContent=p===0?'Get started':p===slides.length-1?'Start quiz':'Continue';progress(Math.round(Math.min(p,slides.length)/(slides.length+1)*100));
+  if(p===slides.length){showQ();return}
+  const s=slides[p],card=text('div','','hero'+(p===0?' welcome':''));card.append(text('div',s[2].toUpperCase(),'ey'),text('h1',s[0]));
+  if(p===0){card.append(text('p',s[1],'lead'));welcomeView(card,c)}
+  else if(p>=20&&p<=22){
+    card.append(text('p',s[1],'lead'));c.append(card);
+    if(p===20)showWorkedExample(c);else if(p===21)showPractice(c);else showValidation(c);
+  }else if(presentationVisuals[p]){
+    c.append(card);const layout=text('div','','lesson-layout');addVisual(layout);
+    const notes=text('aside','','lesson-notes');notes.append(text('h2','What to do'),copyBlocks(s[1]));layout.append(notes);c.append(layout);
+  }else{
+    c.append(card);const layout=text('div','','reading-layout'),side=text('aside','','chapter-caption');
+    side.append(text('span',String(p+1).padStart(2,'0'),'section-number'),text('span',s[2]));
+    const body=text('div','','reading-copy');body.append(copyBlocks(s[1]));layout.append(side,body);c.append(layout);
+  }
+  const pending={
+    3:'The presentation shows different Design/Planning sequences in its governance and Jira-status diagrams. The process owner must confirm how they relate.',
+    5:'The presentation provides five governance criteria and eight IT criteria. Their relationship must be confirmed by the process owner.',
+    6:'These eight criteria come from the IT reference slide. Confirm how they relate to the five governance criteria before applying them to a real request.',
+    11:'The status sequence differs from the governance sequence in the presentation. Confirm the actual JANE workflow before using this as a production reference.',
+    18:'The Component examples in the presentation are marked as not final. Use only currently approved values in the real application.'
+  };
+  if(pending[p])trainingNotice(c,'Process-owner validation pending',pending[p]);
+  save();window.scrollTo(0,0);
+}
 function showQ(){locked=false;el('content').replaceChildren();el('content').append(text('div','FINAL QUIZ','ey'),text('h1','Check your understanding.'));const meta=text('div','Question '+(qi+1)+' of '+quiz.length+' · Pass mark: 80%','quizmeta');const card=document.createElement('div');card.className='card';card.append(text('h2',quiz[qi][0]));const opts=document.createElement('div');opts.id='opts';quiz[qi][1].forEach((s,i)=>{const b=text('button',String.fromCharCode(65+i)+'. '+s,'choice');b.onclick=()=>grade(i);opts.append(b)});card.append(opts);const fb=document.createElement('div');fb.id='fb';fb.setAttribute('role','status');card.append(fb);el('content').append(meta,card);window.scrollTo(0,0)}
 function grade(i){if(locked)return;locked=true;const z=quiz[qi],ok=i===z[2];if(ok)score++;[...el('opts').children].forEach((b,j)=>{b.disabled=true;if(j===z[2])b.classList.add('ok');if(j===i&&!ok)b.classList.add('no')});const fb=el('fb');fb.className='feedback '+(ok?'ok':'no');fb.append(text('p',(ok?'Correct. ':'Not quite. ')+z[3]));const b=text('button',qi===quiz.length-1?'See result':'Next question','continue');b.onclick=()=>{if(qi<quiz.length-1){qi++;showQ()}else result()};fb.append(b);b.focus()}
 function result(){p=slides.length+1;const pct=Math.round(score/quiz.length*100),pass=pct>=80;set('cmi.core.score.min',0);set('cmi.core.score.max',100);set('cmi.core.score.raw',pct);status=pass?'passed':'failed';set('cmi.core.lesson_status',status);set('cmi.core.exit','');commit();progress(100);el('back').classList.add('hide');el('next').classList.add('hide');const card=document.createElement('div');card.className='hero welcome';card.append(text('div','FINAL RESULT','ey'),text('h1',pass?'Congratulations':'Almost there'),text('p',pass?'You passed the JANE onboarding assessment.':'You need 80% to pass. Review the feedback and try again.','lead'),text('p',pct+'%','score'));const b=text('button','Retake quiz','continue');b.onclick=()=>{qi=0;score=0;p=slides.length;render()};card.append(b);el('content').replaceChildren(card);window.scrollTo(0,0)}
 el('next').onclick=()=>{if(p<slides.length){p++;if(p===slides.length){qi=0;score=0;attemptStarted=true}render()}};
 el('back').onclick=()=>{if(p>0){p--;qi=0;score=0;render()}};
-let dark=window.matchMedia('(prefers-color-scheme: dark)').matches;function theme(){document.documentElement.dataset.theme=dark?'dark':'light';el('theme').textContent=dark?'Light view':'Dark view'}el('theme').onclick=()=>{dark=!dark;theme()};theme();
+let dark=false;function theme(){document.documentElement.dataset.theme=dark?'dark':'light';el('theme').textContent=dark?'Light view':'Dark view'}el('theme').onclick=()=>{dark=!dark;theme()};theme();
 let finished=false;function finish(){if(finished)return;finished=true;if(p<=slides.length)save();try{if(initialized)API.LMSFinish('')}catch(e){}}
 window.addEventListener('pagehide',finish);window.addEventListener('beforeunload',finish);render();
 </script></body></html>

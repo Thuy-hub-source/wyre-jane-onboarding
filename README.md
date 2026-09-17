@@ -1,12 +1,18 @@
 # Getting Started with JANE
 
-Wyre-branded review module: 22 content screens and a 10-question assessment.
+Wyre-branded review module: 24 screens, a guided drafting exercise and a 10-question assessment.
 
 ## Preview
 
 This repository is configured for GitHub Pages. The website provides a review experience, not an LMS-tracked completion record.
 
-To view locally, keep `index.html`, `data.js`, `visuals.js`, `wyre-logo.png` and the `visuals/` folder together and open `index.html` in a browser.
+To view locally, keep `index.html`, `data.js`, `visuals.js`, `learning.js`, `wyre-logo.png` and the `visuals/` folder together and open `index.html` in a browser.
+
+## Worked example and practice
+
+The light product-led version includes a fictional worked request, four draft fields with example comparison and self-review, and three decisions with answer-specific feedback. Draft text remains in page memory only and is not sent to JANE or recorded as an LMS answer. Reloading clears that text.
+
+The example prompts are not verified JANE form fields. The module explicitly flags unresolved Design/Planning ordering, the relationship between five governance and eight IT Small Change criteria, draft Components, and approval/access/support routes. Wyre process-owner validation remains required before final rollout.
 
 ## Presentation illustrations
 
@@ -21,6 +27,7 @@ Internal names in the ticket and comment examples are retained with permission. 
 - Acceptance testing in FlowSparks is still required.
 - This is the extended test module, not the separate 15-minute storyboard.
 - The screen menu allows free navigation for review.
+- The light layout, image enlargement, drafting exercise, decision feedback and quiz were browser-tested at desktop and mobile widths.
 
 ## Branding
 
