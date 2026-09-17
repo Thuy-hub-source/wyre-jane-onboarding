@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Getting Started with JANE</title>
+<style>
+:root{--forest:#004440;--ink:#1A4340;--green:#008666;--light:#DDF3EA;--pale:#F7F9F8;--muted:#52665f;--border:#c9ddd4;--surface:#fff;--error:#8a3329;--error-bg:#fff0ed;--text-xs:.75rem;--text-base:1rem;--text-lg:1.2rem;--text-xl:clamp(1.8rem,3vw,2.5rem);--space:1rem}
+*{box-sizing:border-box}body{margin:0;font:17px/1.55 Arial,sans-serif;background:var(--pale);color:var(--ink)}
+header{min-height:90px;background:var(--surface);border-bottom:1px solid var(--border);padding:16px 5vw;display:flex;align-items:center;gap:24px}
+.brand{width:104px;height:auto;display:block;background:#fff}.tag,.ey{font-size:var(--text-xs);font-weight:700;letter-spacing:1.3px;color:var(--forest)}.prog{margin-left:auto;width:190px}.track{height:5px;background:var(--border);margin-top:8px}.bar{height:5px;background:var(--green);width:0}
+main{width:min(1000px,90vw);margin:32px auto 110px}.review{display:flex;justify-content:space-between;gap:16px;margin-bottom:20px;font-size:var(--text-xs);color:var(--muted)}
+.hero,.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:40px}
+.hero.welcome{background:var(--light);padding:56px;min-height:380px}.ey{margin:0 0 12px;color:var(--green)}
+h1{font-size:var(--text-xl);line-height:1.15;letter-spacing:-1px;margin:0 0 24px;max-width:800px}h2{font-size:var(--text-lg);line-height:1.4;margin-top:0}
+.lead{font-size:var(--text-lg);color:var(--ink);max-width:820px;white-space:pre-line;margin:0}.welcome h1{font-size:clamp(2.4rem,5vw,3.5rem);max-width:650px}.count{font-variant-numeric:tabular-nums}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);padding:16px 5vw;display:flex;align-items:center;justify-content:space-between;gap:16px}
+button,select{font:inherit}button{cursor:pointer;border-radius:8px;padding:12px 20px;font-size:var(--text-base);font-weight:700}button:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid var(--green);outline-offset:4px}
+.next,.continue{background:var(--green);color:#fff;border:1px solid var(--green)}.back{background:var(--surface);border:1px solid var(--border);color:var(--forest)}
+.choice{display:block;width:100%;margin:12px 0;padding:16px;text-align:left;font-weight:400;border:1px solid var(--border);background:var(--surface);color:var(--ink)}
+.choice:hover:not(:disabled){background:var(--light)}.choice:disabled{cursor:default;opacity:1}.ok{background:var(--light)!important;border-color:var(--green)!important;color:var(--ink)}.no{background:var(--error-bg)!important;border-color:var(--error)!important;color:var(--error)}
+.feedback{margin-top:20px;padding:20px;border-radius:8px}.quizmeta{display:flex;justify-content:space-between;margin-bottom:20px;color:var(--muted);font-size:var(--text-base)}
+.hide{display:none!important}select{max-width:320px;padding:10px;border:1px solid var(--border);border-radius:6px;background:var(--surface);color:var(--ink);font-size:var(--text-base)}
+.score{font-size:3.5rem;font-weight:700;margin:16px 0}.review a{color:var(--muted)}.mode{padding:8px 12px;font-size:var(--text-xs)}
+@media(max-width:650px){header{flex-wrap:wrap;gap:12px;padding:16px 5vw}.brand{width:84px}.tag{font-size:12px}.prog{width:100%;order:4}.hero,.card,.hero.welcome{padding:24px}.review{flex-direction:column;gap:4px}main{margin-top:24px}.lead{font-size:1rem}.bottom{padding:12px 5vw;gap:8px}.bottom select{max-width:120px;font-size:12px}button{padding:12px}.quizmeta{font-size:14px}h1{font-size:1.9rem}}
+html[data-theme=dark]{--forest:#d9f2e8;--ink:#e6f4ed;--green:#008666;--light:#174c40;--pale:#102b26;--muted:#b5d0c5;--border:#42665a;--surface:#183a32;--error-bg:#4e2c27;--error:#ffd3c9}
+html[data-theme=dark] .ey{color:#90d8be}
+@media print{header,.bottom,.review{display:none}main{width:100%;margin:0}.hero,.card{border:0}}
+</style>
+</head>
+<body>
+<header><img class="brand" src="wyre-logo.png" alt="Wyre"><div class="tag">INTERNAL ONBOARDING<br>GETTING STARTED WITH JANE</div><button class="back mode" id="theme" aria-label="Switch colour theme">Dark view</button><div class="prog"><div class="tag" id="pl">PROGRESS 0%</div><div class="track" role="progressbar" aria-label="Module progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progress"><div class="bar" id="bar"></div></div></div></header>
+<main><div class="review"><span id="mode">REVIEW VERSION · No LMS tracking in this preview</span><span>Complete test module · 22 screens + 10 questions</span></div><section id="content" aria-live="polite"></section></main>
+<footer class="bottom"><button id="back" class="back">Back</button><label><span class="hide">Jump to a screen</span><select id="menu" aria-label="Jump to a screen"></select></label><button id="next" class="next">Get started</button></footer>
+<script src="data.js"></script>
+<script>
+const el=id=>document.getElementById(id);
+let p=0,qi=0,score=0,locked=false,API=null,initialized=false,status='',attemptStarted=false;
+function findAPI(w){for(let i=0;i<10&&w;i++){try{if(w.API)return w.API;if(w.parent&&w.parent!==w)w=w.parent;else break}catch(e){break}}return null}
+try{API=findAPI(window)||findAPI(window.opener)}catch(e){}
+function get(k){try{return initialized?API.LMSGetValue(k):''}catch(e){return ''}}
+function set(k,v){try{if(initialized)API.LMSSetValue(k,String(v))}catch(e){}}
+function commit(){try{if(initialized)API.LMSCommit('')}catch(e){}}
+if(API){try{initialized=String(API.LMSInitialize(''))==='true';if(initialized){status=get('cmi.core.lesson_status');if(!status||status==='not attempted'){status='incomplete';set('cmi.core.lesson_status',status)}const loc=get('cmi.core.lesson_location');if(loc&&Number.isInteger(+loc))p=Math.max(0,Math.min(+loc,slides.length-1));el('mode').textContent='LMS MODE · SCORM 1.2 connection active'}}catch(e){}}
+function save(){set('cmi.core.lesson_location',Math.min(p,slides.length-1));set('cmi.core.exit','suspend');commit()}
+function text(tag,txt,cls){const n=document.createElement(tag);n.textContent=txt;if(cls)n.className=cls;return n}
+slides.forEach((s,i)=>{const o=document.createElement('option');o.value=i;o.textContent=(i+1)+'. '+s[0];el('menu').append(o)});
+el('menu').onchange=()=>{p=+el('menu').value;qi=0;score=0;render()};
+function progress(value){el('bar').style.width=value+'%';el('pl').textContent='PROGRESS '+value+'%';el('progress').setAttribute('aria-valuenow',value)}
+function render(){const c=el('content');c.replaceChildren();el('back').classList.toggle('hide',p===0||p>slides.length);el('next').classList.toggle('hide',p>=slides.length);el('menu').value=Math.min(p,slides.length-1);el('next').textContent=p===0?'Get started':p===slides.length-1?'Start quiz':'Continue';progress(Math.round(Math.min(p,slides.length)/(slides.length+1)*100));if(p===slides.length){showQ();return}const s=slides[p],card=document.createElement('div');card.className='hero'+(p===0?' welcome':'');card.append(text('div',s[2].toUpperCase(),'ey'),text('h1',s[0]),text('p',s[1],'lead'));c.append(card);save();window.scrollTo(0,0)}
+function showQ(){locked=false;el('content').replaceChildren();el('content').append(text('div','FINAL QUIZ','ey'),text('h1','Check your understanding.'));const meta=text('div','Question '+(qi+1)+' of '+quiz.length+' · Pass mark: 80%','quizmeta');const card=document.createElement('div');card.className='card';card.append(text('h2',quiz[qi][0]));const opts=document.createElement('div');opts.id='opts';quiz[qi][1].forEach((s,i)=>{const b=text('button',String.fromCharCode(65+i)+'. '+s,'choice');b.onclick=()=>grade(i);opts.append(b)});card.append(opts);const fb=document.createElement('div');fb.id='fb';fb.setAttribute('role','status');card.append(fb);el('content').append(meta,card);window.scrollTo(0,0)}
+function grade(i){if(locked)return;locked=true;const z=quiz[qi],ok=i===z[2];if(ok)score++;[...el('opts').children].forEach((b,j)=>{b.disabled=true;if(j===z[2])b.classList.add('ok');if(j===i&&!ok)b.classList.add('no')});const fb=el('fb');fb.className='feedback '+(ok?'ok':'no');fb.append(text('p',(ok?'Correct. ':'Not quite. ')+z[3]));const b=text('button',qi===quiz.length-1?'See result':'Next question','continue');b.onclick=()=>{if(qi<quiz.length-1){qi++;showQ()}else result()};fb.append(b);b.focus()}
+function result(){p=slides.length+1;const pct=Math.round(score/quiz.length*100),pass=pct>=80;set('cmi.core.score.min',0);set('cmi.core.score.max',100);set('cmi.core.score.raw',pct);status=pass?'passed':'failed';set('cmi.core.lesson_status',status);set('cmi.core.exit','');commit();progress(100);el('back').classList.add('hide');el('next').classList.add('hide');const card=document.createElement('div');card.className='hero welcome';card.append(text('div','FINAL RESULT','ey'),text('h1',pass?'Congratulations':'Almost there'),text('p',pass?'You passed the JANE onboarding assessment.':'You need 80% to pass. Review the feedback and try again.','lead'),text('p',pct+'%','score'));const b=text('button','Retake quiz','continue');b.onclick=()=>{qi=0;score=0;p=slides.length;render()};card.append(b);el('content').replaceChildren(card);window.scrollTo(0,0)}
+el('next').onclick=()=>{if(p<slides.length){p++;if(p===slides.length){qi=0;score=0;attemptStarted=true}render()}};
+el('back').onclick=()=>{if(p>0){p--;qi=0;score=0;render()}};
+let dark=window.matchMedia('(prefers-color-scheme: dark)').matches;function theme(){document.documentElement.dataset.theme=dark?'dark':'light';el('theme').textContent=dark?'Light view':'Dark view'}el('theme').onclick=()=>{dark=!dark;theme()};theme();
+let finished=false;function finish(){if(finished)return;finished=true;if(p<=slides.length)save();try{if(initialized)API.LMSFinish('')}catch(e){}}
+window.addEventListener('pagehide',finish);window.addEventListener('beforeunload',finish);render();
+</script></body></html>
