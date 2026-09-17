@@ -24,6 +24,22 @@ button,select{font:inherit}button{cursor:pointer;border-radius:8px;padding:12px 
 @media(max-width:650px){header{flex-wrap:wrap;gap:12px;padding:16px 5vw}.brand{width:84px}.tag{font-size:12px}.prog{width:100%;order:4}.hero,.card,.hero.welcome{padding:24px}.review{flex-direction:column;gap:4px}main{margin-top:24px}.lead{font-size:1rem}.bottom{padding:12px 5vw;gap:8px}.bottom select{max-width:120px;font-size:12px}button{padding:12px}.quizmeta{font-size:14px}h1{font-size:1.9rem}}
 html[data-theme=dark]{--forest:#d9f2e8;--ink:#e6f4ed;--green:#008666;--light:#174c40;--pale:#102b26;--muted:#b5d0c5;--border:#42665a;--surface:#183a32;--error-bg:#4e2c27;--error:#ffd3c9}
 html[data-theme=dark] .ey{color:#90d8be}
+.visual-card{margin:24px 0 0;background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.visual-heading{padding:24px 28px 16px;display:flex;align-items:center;justify-content:space-between;gap:16px}.visual-heading h2{margin:0}
+.visual-source{color:var(--muted);font-size:12px;line-height:1.5;margin:6px 0 0}
+.visual-image{display:block;width:100%;height:auto;background:#fff}
+.visual-frame{padding:12px 24px;background:#fff}
+.visual-card.narrow .visual-image{max-width:720px;margin:auto}
+.visual-caption{padding:20px 28px;margin:0;font-size:1rem}
+.visual-caption p{margin:0}.visual-caption .visual-source{margin-top:10px}
+.visual-intro{margin-top:28px}.visual-intro p{font-size:14px;color:var(--muted);margin:12px 0 0}
+dialog{width:min(1500px,96vw);max-height:94dvh;padding:0;background:var(--surface);color:var(--ink);border:1px solid var(--border);border-radius:12px}
+dialog::backdrop{background:rgba(0,30,25,.75)}
+.zoom-head{position:sticky;top:0;background:var(--surface);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;z-index:1;border-bottom:1px solid var(--border)}
+.zoom-head h2{margin:0}.zoom-scroll{overflow:auto;background:#fff;max-height:72dvh;padding:12px}
+.zoom-scroll img{display:block;width:100%;height:auto}.zoom-scroll img.actual-size{width:auto;max-width:none}
+.zoom-help{padding:12px 24px;margin:0;font-size:14px;color:var(--muted)}
+@media(max-width:650px){.visual-heading{align-items:flex-start;padding:20px;flex-direction:column;gap:12px}.visual-frame{padding:8px}.visual-caption{padding:20px}.visual-heading button{width:100%}.zoom-head{padding:12px;flex-wrap:wrap}.zoom-head h2{width:100%}.zoom-help{padding:12px}.zoom-scroll{max-height:65dvh}}
 @media print{header,.bottom,.review{display:none}main{width:100%;margin:0}.hero,.card{border:0}}
 </style>
 </head>
@@ -31,7 +47,13 @@ html[data-theme=dark] .ey{color:#90d8be}
 <header><img class="brand" src="wyre-logo.png" alt="Wyre"><div class="tag">INTERNAL ONBOARDING<br>GETTING STARTED WITH JANE</div><button class="back mode" id="theme" aria-label="Switch colour theme">Dark view</button><div class="prog"><div class="tag" id="pl">PROGRESS 0%</div><div class="track" role="progressbar" aria-label="Module progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progress"><div class="bar" id="bar"></div></div></div></header>
 <main><div class="review"><span id="mode">REVIEW VERSION · No LMS tracking in this preview</span><span>Complete test module · 22 screens + 10 questions</span></div><section id="content" aria-live="polite"></section></main>
 <footer class="bottom"><button id="back" class="back">Back</button><label><span class="hide">Jump to a screen</span><select id="menu" aria-label="Jump to a screen"></select></label><button id="next" class="next">Get started</button></footer>
+<dialog id="visual-dialog" aria-labelledby="zoom-title">
+  <div class="zoom-head"><h2 id="zoom-title">Presentation illustration</h2><button id="zoom-size" class="back">Original size</button><button id="zoom-close" class="next">Close</button></div>
+  <div class="zoom-scroll"><img id="zoom-image" alt=""></div>
+  <p class="zoom-help">Illustration from the supplied presentation, not a live application screen. At original size, scroll to inspect details. Press Escape to close.</p>
+</dialog>
 <script src="data.js"></script>
+<script src="visuals.js"></script>
 <script>
 const el=id=>document.getElementById(id);
 let p=0,qi=0,score=0,locked=false,API=null,initialized=false,status='',attemptStarted=false;
@@ -46,7 +68,27 @@ function text(tag,txt,cls){const n=document.createElement(tag);n.textContent=txt
 slides.forEach((s,i)=>{const o=document.createElement('option');o.value=i;o.textContent=(i+1)+'. '+s[0];el('menu').append(o)});
 el('menu').onchange=()=>{p=+el('menu').value;qi=0;score=0;render()};
 function progress(value){el('bar').style.width=value+'%';el('pl').textContent='PROGRESS '+value+'%';el('progress').setAttribute('aria-valuenow',value)}
-function render(){const c=el('content');c.replaceChildren();el('back').classList.toggle('hide',p===0||p>slides.length);el('next').classList.toggle('hide',p>=slides.length);el('menu').value=Math.min(p,slides.length-1);el('next').textContent=p===0?'Get started':p===slides.length-1?'Start quiz':'Continue';progress(Math.round(Math.min(p,slides.length)/(slides.length+1)*100));if(p===slides.length){showQ();return}const s=slides[p],card=document.createElement('div');card.className='hero'+(p===0?' welcome':'');card.append(text('div',s[2].toUpperCase(),'ey'),text('h1',s[0]),text('p',s[1],'lead'));c.append(card);save();window.scrollTo(0,0)}
+function showVisual(v){
+  const d=el('visual-dialog'),img=el('zoom-image');
+  el('zoom-title').textContent=v.title;img.src=v.src;img.alt=v.alt;img.classList.remove('actual-size');
+  el('zoom-size').textContent='Original size';d.showModal();el('zoom-close').focus();
+  d.querySelector('.zoom-scroll').scrollTo(0,0);
+}
+el('zoom-close').onclick=()=>el('visual-dialog').close();
+el('visual-dialog').addEventListener('click',e=>{if(e.target===el('visual-dialog')){const r=e.target.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)e.target.close()}});
+el('zoom-size').onclick=()=>{const original=el('zoom-image').classList.toggle('actual-size');el('zoom-size').textContent=original?'Fit to window':'Original size'};
+function addVisual(container){
+  const v=presentationVisuals[p];if(!v)return;
+  const figure=document.createElement('figure');figure.className='visual-card'+(p===10||p===17?'':' narrow');
+  const head=text('div','','visual-heading'),label=document.createElement('div');
+  label.append(text('h2',v.title),text('p','PRESENTATION ILLUSTRATION · SLIDE '+v.source,'visual-source'));
+  const open=text('button','Enlarge image','back');open.setAttribute('aria-haspopup','dialog');open.onclick=()=>showVisual(v);
+  head.append(label,open);
+  const frame=text('div','','visual-frame'),img=document.createElement('img');img.src=v.src;img.alt=v.alt;img.className='visual-image';frame.append(img);
+  const caption=text('figcaption','','visual-caption');caption.append(text('p',v.note),text('p',v.provenance,'visual-source'));
+  figure.append(head,frame,caption);container.append(figure);
+}
+function render(){const c=el('content');c.replaceChildren();el('back').classList.toggle('hide',p===0||p>slides.length);el('next').classList.toggle('hide',p>=slides.length);el('menu').value=Math.min(p,slides.length-1);el('next').textContent=p===0?'Get started':p===slides.length-1?'Start quiz':'Continue';progress(Math.round(Math.min(p,slides.length)/(slides.length+1)*100));if(p===slides.length){showQ();return}const s=slides[p],card=document.createElement('div');card.className='hero'+(p===0?' welcome':'');card.append(text('div',s[2].toUpperCase(),'ey'),text('h1',s[0]),text('p',s[1],'lead'));if(p===0){const intro=text('div','','visual-intro'),b=text('button','View application illustrations','back');b.onclick=()=>{p=9;render()};intro.append(b,text('p','Now includes 7 illustrations from the Wyre presentation.'));card.append(intro)}c.append(card);addVisual(c);save();window.scrollTo(0,0)}
 function showQ(){locked=false;el('content').replaceChildren();el('content').append(text('div','FINAL QUIZ','ey'),text('h1','Check your understanding.'));const meta=text('div','Question '+(qi+1)+' of '+quiz.length+' · Pass mark: 80%','quizmeta');const card=document.createElement('div');card.className='card';card.append(text('h2',quiz[qi][0]));const opts=document.createElement('div');opts.id='opts';quiz[qi][1].forEach((s,i)=>{const b=text('button',String.fromCharCode(65+i)+'. '+s,'choice');b.onclick=()=>grade(i);opts.append(b)});card.append(opts);const fb=document.createElement('div');fb.id='fb';fb.setAttribute('role','status');card.append(fb);el('content').append(meta,card);window.scrollTo(0,0)}
 function grade(i){if(locked)return;locked=true;const z=quiz[qi],ok=i===z[2];if(ok)score++;[...el('opts').children].forEach((b,j)=>{b.disabled=true;if(j===z[2])b.classList.add('ok');if(j===i&&!ok)b.classList.add('no')});const fb=el('fb');fb.className='feedback '+(ok?'ok':'no');fb.append(text('p',(ok?'Correct. ':'Not quite. ')+z[3]));const b=text('button',qi===quiz.length-1?'See result':'Next question','continue');b.onclick=()=>{if(qi<quiz.length-1){qi++;showQ()}else result()};fb.append(b);b.focus()}
 function result(){p=slides.length+1;const pct=Math.round(score/quiz.length*100),pass=pct>=80;set('cmi.core.score.min',0);set('cmi.core.score.max',100);set('cmi.core.score.raw',pct);status=pass?'passed':'failed';set('cmi.core.lesson_status',status);set('cmi.core.exit','');commit();progress(100);el('back').classList.add('hide');el('next').classList.add('hide');const card=document.createElement('div');card.className='hero welcome';card.append(text('div','FINAL RESULT','ey'),text('h1',pass?'Congratulations':'Almost there'),text('p',pass?'You passed the JANE onboarding assessment.':'You need 80% to pass. Review the feedback and try again.','lead'),text('p',pct+'%','score'));const b=text('button','Retake quiz','continue');b.onclick=()=>{qi=0;score=0;p=slides.length;render()};card.append(b);el('content').replaceChildren(card);window.scrollTo(0,0)}

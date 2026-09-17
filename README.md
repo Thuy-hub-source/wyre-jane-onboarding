@@ -6,7 +6,13 @@ Wyre-branded review module: 22 content screens and a 10-question assessment.
 
 This repository is configured for GitHub Pages. The website provides a review experience, not an LMS-tracked completion record.
 
-To view locally, keep `index.html`, `data.js` and `wyre-logo.png` together and open `index.html` in a browser.
+To view locally, keep `index.html`, `data.js`, `visuals.js`, `wyre-logo.png` and the `visuals/` folder together and open `index.html` in a browser.
+
+## Presentation illustrations
+
+Seven illustrations from the supplied Wyre onboarding PowerPoint accompany the intake forms, Board, ticket, comments, attachments, filters and backlog sections. They are cropped PowerPoint interface drawings, not original screenshots of a live JANE environment. Each illustration includes its source slide number, an adaptation note and an enlargement control.
+
+Internal names in the ticket and comment examples are retained with permission. Ticket identifiers and descriptions have been generalised in the Board, ticket and backlog examples. The original PowerPoint is not included in this public repository.
 
 ## Review status
 
