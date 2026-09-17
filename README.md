@@ -31,4 +31,6 @@ Internal names in the ticket and comment examples are retained with permission. 
 
 ## Branding
 
+The light review design uses proposed soft-blue accents for guidance and warm-apricot accents for practice and pending review points. These additions were approved for this prototype but are not represented as official secondary Wyre brand colours.
+
 The official Wyre logo comes from the [Telenet press release “NetCo = Wyre”](https://press.telenet.be/netco--wyre). Colours follow the supplied JANE visual specification. The logo and brand remain the property of their respective rights holders; public availability does not grant a licence to reuse them.

@@ -131,6 +131,18 @@ h1{font-size:34px;letter-spacing:-1px;margin-bottom:24px}.lesson-layout{margin-t
 @media(max-width:650px){.example-row{grid-template-columns:1fr;gap:8px;padding:22px 0}.validation-grid{grid-template-columns:1fr}.validation-card{padding:24px}.practice-scenario{font-size:16px}}
 .tag,.review,.stage-label{font-size:12px}
 html[data-theme=dark] .back{background:var(--surface);color:var(--ink);transition:none}
+/* Proposed secondary accents, not an asserted official Wyre brand palette. */
+:root{--blue-soft:#eaf2ff;--blue-ink:#23508b;--apricot-soft:#fff0e4;--apricot-ink:#85421e}
+.product-stage,.lesson-notes{background:var(--blue-soft)}
+.stage-label strong,.chapter-caption .section-number{color:var(--blue-ink)}
+.practice-shell .card,.training-notice{background:var(--apricot-soft)}
+.training-notice{border-color:transparent}
+.training-notice strong,.practice-shell .ey{color:var(--apricot-ink)}
+.validation-card .pending{background:var(--apricot-soft);color:var(--apricot-ink)}
+.outcome span{color:var(--blue-ink)}
+.outcome:nth-child(3) span{color:var(--apricot-ink)}
+html[data-theme=dark]{--blue-soft:#202f44;--blue-ink:#abcaff;--apricot-soft:#3c2b21;--apricot-ink:#ffcea8}
+html[data-theme=dark] .product-stage{background:var(--blue-soft)}
 </style>
 </head>
 <body>
